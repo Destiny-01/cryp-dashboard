@@ -36,7 +36,8 @@ export default function Dashboard() {
           totalCoins: data.length,
           ruggedCoins: data.filter((trade: Trade) => trade.changePercent < -80)
             .length,
-          boughtCoins: data.length,
+          boughtCoins: data.filter((trade: Trade) => trade.entryMarketCap > 0)
+            .length,
           successfulWins: successfulTrades.length,
           losses: data.length - successfulTrades.length,
         });
