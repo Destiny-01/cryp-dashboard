@@ -73,9 +73,10 @@ export default function Dashboard() {
       title: "Successful Wins",
       value: stats.successfulWins.toString(),
       icon: TrendingUp,
-      description: `${((stats.successfulWins / stats.totalCoins) * 100).toFixed(
-        0
-      )}% success rate`,
+      description: `${(
+        (stats.successfulWins / stats.totalCoins) *
+        100
+      )?.toFixed(0)}% success rate`,
     },
     {
       title: "Losses Count",

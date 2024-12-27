@@ -64,7 +64,7 @@ export const columns: ColumnDef<Trade>[] = [
           }`}
         >
           {isPositive ? "+" : ""}
-          {change.toFixed(2)}%
+          {change?.toFixed(2)}%
         </div>
       );
     },
