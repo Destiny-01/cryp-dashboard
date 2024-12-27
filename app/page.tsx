@@ -24,7 +24,8 @@ export default function Dashboard() {
       try {
         setIsLoading(true);
         const response = await fetch("/api/trades");
-        const data = await response.json();
+        const allCoins = await response.json();
+        const data = allCoins.filter((d: any) => d.status === "active");
         setTrades(data);
 
         console.log(data);
@@ -33,7 +34,7 @@ export default function Dashboard() {
           (trade: Trade) => trade.changePercent > 0
         );
         setStats({
-          totalCoins: data.length,
+          totalCoins: allCoins.length,
           ruggedCoins: data.filter((trade: Trade) => trade.changePercent < -80)
             .length,
           boughtCoins: data.filter((trade: Trade) => trade.entryMarketCap > 0)

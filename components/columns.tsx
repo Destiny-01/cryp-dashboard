@@ -80,7 +80,7 @@ export const columns: ColumnDef<Trade>[] = [
     },
   },
   {
-    accessorKey: "highestMc",
+    accessorKey: "highestMarketCap",
     header: "Highest MC",
     cell: ({ row }) => {
       const value = (row.getValue("highestMarketCap") ||
@@ -93,7 +93,7 @@ export const columns: ColumnDef<Trade>[] = [
     },
   },
   {
-    accessorKey: "lowestMc",
+    accessorKey: "lowestMarketCap",
     header: "Lowest MC",
     cell: ({ row }) => {
       const value = (row.getValue("lowestMarketCap") ||
