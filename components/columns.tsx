@@ -5,6 +5,7 @@ import { ArrowUpDown, ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { Trade } from "@/types";
+import { formatTimestamp } from "@/lib/utils";
 
 export const columns: ColumnDef<Trade>[] = [
   {
@@ -67,6 +68,15 @@ export const columns: ColumnDef<Trade>[] = [
           {change?.toFixed(2)}%
         </div>
       );
+    },
+  },
+  {
+    accessorKey: "createdAt",
+    header: "Time bought",
+    cell: ({ row }) => {
+      const date = row.getValue("createdAt") as string;
+
+      return <div className={`text-center`}>{formatTimestamp(date)}%</div>;
     },
   },
   {

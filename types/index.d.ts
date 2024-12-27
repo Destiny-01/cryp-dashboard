@@ -14,4 +14,6 @@ export interface Trade {
   checks: number;
   tradeComplete: boolean;
   status: STATUS;
+  createdAt: string;
+  updatedAt: string;
 }

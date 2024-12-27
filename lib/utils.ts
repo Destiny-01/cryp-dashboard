@@ -33,3 +33,39 @@ export const getApiData = async (token: string) => {
     return null;
   }
 };
+
+export const formatTimestamp = (isoString: string) => {
+  if (!isoString) return "-- --";
+  const date = new Date(isoString);
+
+  // Extract details
+  const hours = date.getUTCHours();
+  const minutes = date.getUTCMinutes();
+  const day = date.getUTCDate();
+  const month = date.toLocaleString("en-US", {
+    month: "long",
+    timeZone: "UTC",
+  });
+  const year = date.getUTCFullYear();
+
+  // Format time with AM/PM
+  const isPM = hours >= 12;
+  const hour12 = hours % 12 || 12; // Convert to 12-hour format
+  const minutePadded = minutes.toString().padStart(2, "0");
+  const time = `${hour12}:${minutePadded}${isPM ? "pm" : "am"}`;
+
+  // Format timezone (example assumes GMT+1)
+  const timezone = "GMT+1";
+
+  // Format day with suffix
+  const daySuffix =
+    day % 10 === 1 && day !== 11
+      ? "st"
+      : day % 10 === 2 && day !== 12
+      ? "nd"
+      : day % 10 === 3 && day !== 13
+      ? "rd"
+      : "th";
+
+  return `${time} ${timezone} ${day}${daySuffix} ${month}, ${year}`;
+};
