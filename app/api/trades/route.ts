@@ -3,10 +3,18 @@ import { Trade } from "@/types";
 import { MongoClient } from "mongodb";
 
 const uri = process.env.MONGODB_URI || "";
+let cachedClient: MongoClient | null = null;
+
+async function connectToDatabase() {
+  if (!cachedClient) {
+    cachedClient = await MongoClient.connect(uri);
+  }
+  return cachedClient;
+}
 
 export async function GET() {
   try {
-    const client = await MongoClient.connect(uri);
+    const client = await connectToDatabase();
     const db = client.db();
     const collection = db.collection("trades");
 
@@ -31,6 +39,8 @@ export async function GET() {
         changePercent =
           ((currentMarketCap - trade.entryMarketCap) / trade.entryMarketCap) *
           100;
+      } else if (trade.entryMarketCap === 0) {
+        changePercent = -100;
       }
 
       return {
@@ -40,10 +50,9 @@ export async function GET() {
       };
     });
 
-    await client.close();
-
     return Response.json(trades);
   } catch (error) {
+    console.error("Failed to fetch trades:", error);
     return Response.json({ error: "Failed to fetch trades" }, { status: 500 });
   }
 }

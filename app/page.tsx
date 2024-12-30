@@ -31,16 +31,22 @@ export default function Dashboard() {
         console.log(data);
         // Calculate stats
         const successfulTrades = data.filter(
-          (trade: Trade) => trade.changePercent > 0
+          (trade: Trade) => trade.changePercent > 99
+        );
+        const lostTrades = data.filter(
+          (trade: Trade) => trade.changePercent < 0 && trade.exitMarketCap > 0
+        );
+        const ruggedTrades = allCoins.filter(
+          (trade: Trade) =>
+            trade.changePercent < 0 && trade.entryMarketCap === 0
         );
         setStats({
           totalCoins: allCoins.length,
-          ruggedCoins: data.filter((trade: Trade) => trade.changePercent < -80)
-            .length,
+          ruggedCoins: ruggedTrades.length,
           boughtCoins: data.filter((trade: Trade) => trade.entryMarketCap > 0)
             .length,
           successfulWins: successfulTrades.length,
-          losses: data.length - successfulTrades.length,
+          losses: lostTrades.length,
         });
         setIsLoading(false);
       } catch (error) {

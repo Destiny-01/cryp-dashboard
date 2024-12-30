@@ -12,7 +12,9 @@ export const getApiData = async (token: string) => {
     );
     const request = await req.json();
 
-    const pairData = request.pairs[0];
+    const pairData = request.pairs?.length > 0 ? request.pairs[0] : null;
+    if (pairData === null) return null;
+
     const symbol =
       pairData.baseToken.address ===
       "So11111111111111111111111111111111111111112"
@@ -54,9 +56,6 @@ export const formatTimestamp = (isoString: string) => {
   const minutePadded = minutes.toString().padStart(2, "0");
   const time = `${hour12}:${minutePadded}${isPM ? "pm" : "am"}`;
 
-  // Format timezone (example assumes GMT+1)
-  const timezone = "GMT+1";
-
   // Format day with suffix
   const daySuffix =
     day % 10 === 1 && day !== 11
@@ -67,5 +66,16 @@ export const formatTimestamp = (isoString: string) => {
       ? "rd"
       : "th";
 
-  return `${time} ${timezone} ${day}${daySuffix} ${month}, ${year}`;
+  return `${time} ${day}${daySuffix} ${month.slice(0, 3)}`;
 };
+
+export function formatNumber(num: number): string {
+  if (Math.abs(num) >= 1e9) {
+    return (num / 1e9).toFixed(1) + "B"; // Convert to billions
+  } else if (Math.abs(num) >= 1e6) {
+    return (num / 1e6).toFixed(1) + "M"; // Convert to millions
+  } else if (Math.abs(num) >= 1e3) {
+    return (num / 1e3).toFixed(1) + "K"; // Convert to thousands
+  }
+  return num.toString(); // Return as is for numbers below 1000
+}
