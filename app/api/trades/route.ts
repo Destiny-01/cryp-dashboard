@@ -39,7 +39,7 @@ export async function GET() {
           ((trade.exitMarketCap - trade.entryMarketCap) /
             trade.entryMarketCap) *
           100;
-      } else if (currentMarketCap > 0) {
+      } else if (currentMarketCap > 0 && trade.entryMarketCap !== 0) {
         changePercent =
           ((currentMarketCap - trade.entryMarketCap) / trade.entryMarketCap) *
           100;
@@ -54,7 +54,13 @@ export async function GET() {
       };
     });
 
-    return Response.json(trades);
+    return new Response(JSON.stringify(trades), {
+      headers: {
+        "Cache-Control": "no-cache, no-store, must-revalidate",
+        Pragma: "no-cache",
+        Expires: "0",
+      },
+    });
   } catch (error) {
     console.error("Failed to fetch trades:", error);
     return Response.json({ error: "Failed to fetch trades" }, { status: 500 });

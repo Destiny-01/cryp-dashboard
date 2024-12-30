@@ -31,10 +31,11 @@ export default function Dashboard() {
         console.log(data);
         // Calculate stats
         const successfulTrades = data.filter(
-          (trade: Trade) => trade.changePercent > 99
+          (trade: Trade) => trade.tradeStatus === "tp"
         );
         const lostTrades = data.filter(
-          (trade: Trade) => trade.changePercent < 0 && trade.exitMarketCap > 0
+          (trade: Trade) =>
+            trade.tradeStatus === "sl" && trade.exitMarketCap > 0
         );
         const ruggedTrades = allCoins.filter(
           (trade: Trade) =>
