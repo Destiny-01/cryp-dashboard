@@ -23,7 +23,9 @@ export default function Dashboard() {
     const fetchTrades = async () => {
       try {
         setIsLoading(true);
-        const response = await fetch("/api/trades", { cache: "no-store" });
+        const response = await fetch(`/api/trades?cacheBuster=${Date.now()}`, {
+          cache: "no-store",
+        });
         const allCoins = await response.json();
         const data = allCoins.filter((d: any) => d.status === "active");
         setTrades(data);
