@@ -12,6 +12,7 @@ async function connectToDatabase() {
   return cachedClient;
 }
 
+export const dynamic = "force-dynamic";
 export async function GET() {
   try {
     console.log("Fetching...");
