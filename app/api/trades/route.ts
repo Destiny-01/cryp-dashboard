@@ -14,13 +14,17 @@ async function connectToDatabase() {
 
 export async function GET() {
   try {
+    console.log("Fetching...");
     const client = await connectToDatabase();
     const db = client.db();
     const collection = db.collection("trades");
 
-    const allTrades = (await collection
+    const allRawTrades = await collection
       .find({})
-      .toArray()) as unknown as Trade[];
+      .sort({ $natural: -1 })
+      .toArray();
+    const allTrades: Trade[] = allRawTrades as any;
+
     const tokensData = await Promise.all(
       allTrades.map((trade) => getApiData(trade.tokenAddress))
     );
