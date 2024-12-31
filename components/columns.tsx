@@ -69,7 +69,12 @@ export const columns: ColumnDef<Trade>[] = [
         row.getValue("marketCap")) as number;
       return (
         <div className="text-center">
-          {value.toLocaleString() || "Not available"}
+          {value.toLocaleString() +
+            ` (${(
+              ((row.original.highestMarketCap - row.original.entryMarketCap) /
+                row.original.entryMarketCap) *
+              100
+            ).toFixed(2)}%)` || "Not available"}
         </div>
       );
     },
@@ -82,7 +87,12 @@ export const columns: ColumnDef<Trade>[] = [
         row.getValue("marketCap")) as number;
       return (
         <div className="text-center">
-          {value.toLocaleString() || "Not available"}
+          {value.toLocaleString() +
+            ` (${(
+              ((row.original.lowestMarketCap - row.original.entryMarketCap) /
+                row.original.entryMarketCap) *
+              100
+            ).toFixed(2)}%)` || "Not available"}
         </div>
       );
     },
