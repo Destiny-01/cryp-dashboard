@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { Trade } from "@/types";
 import { formatNumber, formatTimestamp } from "@/lib/utils";
+import { TradeLogsDialog } from "./logs-dialog";
 
 export const columns: ColumnDef<Trade>[] = [
   {
@@ -135,6 +136,20 @@ export const columns: ColumnDef<Trade>[] = [
         )}
       </div>
     ),
+  },
+  {
+    id: "actions",
+    cell: ({ row }) => {
+      return (
+        <div className="flex items-center justify-center gap-2">
+          <TradeLogsDialog
+            logs={row.original.logs}
+            tradeName={row.original.symbol}
+            tradeMC={formatNumber(row.original.marketCap) + " MC"}
+          />
+        </div>
+      );
+    },
   },
 ];
 

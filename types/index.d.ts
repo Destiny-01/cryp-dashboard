@@ -1,4 +1,5 @@
 export interface Trade {
+  _id: string;
   tokenAddress: string;
   pairAddress: string;
   symbol: string;
@@ -16,5 +17,20 @@ export interface Trade {
   status: STATUS;
   tradeStatus: "tp" | "sl" | "na";
   createdAt: string;
+  logs: TradeLog[];
   updatedAt: string;
 }
+
+export interface TradeLog {
+  timestamp: Date;
+  action: TradeAction;
+  marketCap: string;
+}
+
+export type TradeAction =
+  | "BOUGHT"
+  | "STOP_LOSS"
+  | "TP_2X"
+  | "TP_5X"
+  | "TP_10X"
+  | "TP_20X";

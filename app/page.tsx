@@ -7,6 +7,8 @@ import { columns } from "@/components/columns";
 import { StatsCard } from "@/components/stats-card";
 import { Bot, Coins, TrendingDown, TrendingUp, Wallet } from "lucide-react";
 import { Trade } from "@/types";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 export default function Dashboard() {
   const [isLoading, setIsLoading] = useState(true);
@@ -85,7 +87,7 @@ export default function Dashboard() {
       value: stats.successfulWins.toString(),
       icon: TrendingUp,
       description: `${(
-        (stats.successfulWins / stats.totalCoins) *
+        (stats.successfulWins / stats.boughtCoins) *
         100
       )?.toFixed(0)}% success rate`,
     },
@@ -109,13 +111,21 @@ export default function Dashboard() {
     <div className="min-h-screen bg-background p-8">
       <div className="mx-auto max-w-7xl">
         <div className="flex flex-col gap-8">
-          <div>
-            <h1 className="text-4xl font-bold tracking-tight">
-              Trading Dashboard
-            </h1>
-            <p className="text-muted-foreground mt-2">
-              Monitor your crypto trading bot performance and analytics
-            </p>
+          <div className="flex items-center justify-between mb-8">
+            <div>
+              <h1 className="text-4xl font-bold tracking-tight">
+                Trading Dashboard
+              </h1>
+              <p className="text-muted-foreground mt-2">
+                Monitor your crypto trading bot performance and analytics
+              </p>
+            </div>
+            <Link
+              href="https://solscan.io/account/HK2x2dMQnrH3ENFMmorP7PiKutrxDNHjGG7XZJApkbi9"
+              target="_blank"
+            >
+              <Button variant="secondary">Solscan wallet</Button>
+            </Link>
           </div>
 
           <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-5">
