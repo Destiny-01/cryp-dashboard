@@ -34,12 +34,11 @@ export default function Dashboard() {
 
         console.log(data);
         // Calculate stats
-        const successfulTrades = data.filter(
-          (trade: Trade) => trade.tradeStatus === "tp"
+        const successfulTrades = data.filter((trade: Trade) =>
+          trade.tradeStatus.startsWith("TP")
         );
         const lostTrades = data.filter(
-          (trade: Trade) =>
-            trade.tradeStatus === "sl" && trade.exitMarketCap > 0
+          (trade: Trade) => trade.tradeStatus === "STOP_LOSS"
         );
         const ruggedTrades = allCoins.filter(
           (trade: Trade) =>

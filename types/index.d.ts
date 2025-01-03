@@ -15,7 +15,7 @@ export interface Trade {
   checks: number;
   tradeComplete: boolean;
   status: STATUS;
-  tradeStatus: "tp" | "sl" | "na";
+  tradeStatus: TradeAction;
   createdAt: string;
   logs: TradeLog[];
   updatedAt: string;

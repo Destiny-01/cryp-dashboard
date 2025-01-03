@@ -121,11 +121,11 @@ export const columns: ColumnDef<Trade>[] = [
     header: createSortableHeader("Status"),
     cell: ({ row }) => (
       <div className="text-center">
-        {row.original.tradeStatus === "tp" ? (
+        {row.original.tradeStatus.startsWith("TP") ? (
           <span className="px-2 py-1 bg-green-100 text-green-800 rounded-full text-sm">
             Profit
           </span>
-        ) : row.original.tradeStatus === "sl" ? (
+        ) : row.original.tradeStatus === "STOP_LOSS" ? (
           <span className="px-2 py-1 bg-red-100 text-red-800 rounded-full text-sm">
             Loss
           </span>
